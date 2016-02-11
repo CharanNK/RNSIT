@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_attendance"
+            android:icon="@drawable/ic_event_black_24dp"
+            android:title="Attendance" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_today_black_24dp"
+            android:title="Calendar Of Events" />
+        <item
+            android:id="@+id/nav_library"
+            android:icon="@drawable/ic_local_library_black_24dp"
+            android:title="Library" />
+        <item
+            android:id="@+id/nav_newsfeed"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="Newsfeed" />
+        <item
+            android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_assignment_black_24dp"
+            android:title="Notes"/>
+        <item
+            android:id="@+id/nav_user"
+            android:icon="@drawable/ic_account_box_black_24dp"
+            android:title="Account"/>
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Logout"/>
+    </group>
+</menu>
