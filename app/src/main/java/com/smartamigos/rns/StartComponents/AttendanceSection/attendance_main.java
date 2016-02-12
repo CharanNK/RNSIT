@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 
 import com.smartamigos.rns.R;
 
-/**
- * Created by SRINIVAS on 2/11/2016.
- */
-public class attendace_main extends Fragment {
+
+public class attendance_main extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

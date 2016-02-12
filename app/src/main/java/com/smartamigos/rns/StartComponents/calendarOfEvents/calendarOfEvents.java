@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 
 import com.smartamigos.rns.R;
 
-/**
- * Created by SRINIVAS on 2/11/2016.
- */
+
 public class calendarOfEvents extends Fragment {
     @Nullable
     @Override

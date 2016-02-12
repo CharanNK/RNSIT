@@ -3,9 +3,6 @@ package com.smartamigos.rns.StartComponents;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,8 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.smartamigos.rns.R;
-import com.smartamigos.rns.StartComponents.*;
-import com.smartamigos.rns.StartComponents.AttendanceSection.attendace_main;
+import com.smartamigos.rns.StartComponents.AttendanceSection.attendance_main;
 import com.smartamigos.rns.StartComponents.calendarOfEvents.calendarOfEvents;
 import com.smartamigos.rns.StartComponents.librarySection.library_main;
 import com.smartamigos.rns.StartComponents.newsfeedSection.newsfeed_main;
@@ -85,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_attendance) {
-            fragment = new attendace_main();
+            fragment = new attendance_main();
             ft.replace(R.id.content_main,fragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(null);
