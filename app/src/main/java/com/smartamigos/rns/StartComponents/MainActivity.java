@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.smartamigos.rns.R;
 import com.smartamigos.rns.StartComponents.AttendanceSection.attendance_main;
 import com.smartamigos.rns.StartComponents.calendarOfEvents.calendarOfEvents;
+import com.smartamigos.rns.StartComponents.contactSection.contact_main;
 import com.smartamigos.rns.StartComponents.librarySection.library_main;
 import com.smartamigos.rns.StartComponents.newsfeedSection.newsfeed_main;
 import com.smartamigos.rns.StartComponents.notesSection.notes_main;
@@ -117,8 +118,15 @@ public class MainActivity extends AppCompatActivity
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(null);
             ft.commit();
-        }else if (id == R.id.nav_logout){
-
+        } else if (id == R.id.nav_contact){
+            fragment = new contact_main();
+            ft.replace(R.id.content_main,fragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+        else if (id == R.id.nav_logout){
+            finish();
         }
 
 
