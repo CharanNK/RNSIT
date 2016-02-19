@@ -208,13 +208,11 @@ public class notes_main extends Fragment implements View.OnClickListener{
         }
         private void openPdf() {
 
-            File file = new File(Environment.getExternalStorageDirectory(),"RNS"+usn+subject+extension);
+            File file = new File("/sdcard/RNS/1RN13ISxxxcn-2.pdf");
             Uri path = Uri.fromFile(file);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setData(path);
-            intent.setType("application/pdf");
+            Intent intent = new Intent();
+            intent.setPackage("com.adobe.reader");
+            intent.setDataAndType(path, "application/pdf");
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
