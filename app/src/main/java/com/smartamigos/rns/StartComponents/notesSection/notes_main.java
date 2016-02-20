@@ -89,7 +89,7 @@ public class notes_main extends Fragment implements View.OnClickListener{
         private PowerManager.WakeLock mWakeLock;
         String extension=".pdf";
         String usn="1RN13ISxxx"; //USN can be replaced here
-        String subject="cn-2";
+        String subject="CN-2";
 
         public DownloadTask(Context context) {
             this.context = context;
