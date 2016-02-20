@@ -1,9 +1,10 @@
 package com.smartamigos.rns.StartComponents.newsfeedSection;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,26 +22,86 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 
 public class newsfeed_main extends Fragment {
     TextView news;
     ProgressBar progressBar;
-    @Nullable
+    static int serverVersion ,localVersion ;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.news_feed,container,false);
+        View view = inflater.inflate(R.layout.news_feed, container, false);
+
+
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         news = (TextView)view.findViewById(R.id.news);
 
-        new NewsTask().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/news.json");
+        new NewsVersion().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/n_version.json");
+
+        SharedPreferences preferences = getActivity().getSharedPreferences("news_version", Context.MODE_PRIVATE);
+        localVersion = preferences.getInt("version", 0);
+
+
+        if(!Objects.equals(localVersion, serverVersion)) {
+            new newsFetch().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/news.json");
+        }else {
+            news.setText("No Updates");
+        }
+
         return view;
     }
 
 
-    public class NewsTask extends AsyncTask<String,String,String>{
+    public class NewsVersion extends AsyncTask<String,String,String>{
+        HttpURLConnection connection;
+        BufferedReader reader;
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection)url.openConnection();
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder builder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine())!= null){
+                    builder.append(line);
+                }
+                return builder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //Parsing the Json file
+            try {
+                JSONObject parent = new JSONObject(s);
+                JSONObject news_version = parent.getJSONObject("news_version");
+
+                serverVersion = news_version.getInt("version");
+
+                SharedPreferences preferences = getActivity().getSharedPreferences("news_version", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("version", serverVersion);
+                editor.apply();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+
+    public class newsFetch extends AsyncTask<String,String,String>{
 
         HttpURLConnection connection;
         BufferedReader reader;
@@ -99,4 +160,5 @@ public class newsfeed_main extends Fragment {
             super.onPostExecute(s);
         }
     }
+
 }
