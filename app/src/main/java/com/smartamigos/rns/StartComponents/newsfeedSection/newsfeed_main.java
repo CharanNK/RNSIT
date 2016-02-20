@@ -49,7 +49,7 @@ public class newsfeed_main extends Fragment {
         if(!Objects.equals(localVersion, serverVersion)) {
             new newsFetch().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/news.json");
         }else {
-            news.setText("No Updates");
+            news.setText("No Updates ");
         }
 
         return view;
