@@ -45,13 +45,6 @@ public class newsfeed_main extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences("news_version", Context.MODE_PRIVATE);
         localVersion = preferences.getInt("version", 0);
 
-
-        if(!Objects.equals(localVersion, serverVersion)) {
-            new newsFetch().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/news.json");
-        }else {
-            news.setText("No Updates ");
-        }
-
         return view;
     }
 
@@ -95,6 +88,13 @@ public class newsfeed_main extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            if(!Objects.equals(localVersion, serverVersion)) {
+                new newsFetch().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/news.json");
+            }else {
+                news.setText("No Updates ");
+            }
+
 
         }
     }
