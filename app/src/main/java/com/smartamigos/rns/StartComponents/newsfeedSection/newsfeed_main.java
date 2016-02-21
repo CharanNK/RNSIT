@@ -2,6 +2,7 @@ package com.smartamigos.rns.StartComponents.newsfeedSection;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -92,7 +96,7 @@ public class newsfeed_main extends Fragment {
             if(!Objects.equals(localVersion, serverVersion)) {
                 new newsFetch().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/news.json");
             }else {
-                news.setText("No Updates ");
+                loadJsonFile();
             }
 
 
@@ -125,6 +129,7 @@ public class newsfeed_main extends Fragment {
                     builder.append(line);
                 }
                 String str =  builder.toString();
+                saveJsonFile(str);
                 //Json Parsing start
                 JSONObject parent = new JSONObject(str);
                 JSONArray newsArray = parent.getJSONArray("news");
@@ -161,4 +166,62 @@ public class newsfeed_main extends Fragment {
         }
     }
 
+    private void saveJsonFile(String data) {
+        FileOutputStream stream = null;
+        try {
+            File path = new File("/data/data/com.smartamigos.rns/news.json");
+            stream = new FileOutputStream(path);
+            stream.write(data.getBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(stream != null)
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void loadJsonFile() {
+        String ret = null;
+        BufferedReader reader = null;
+        try {
+            FileInputStream fis = new FileInputStream(new File("/data/data/com.smartamigos.rns/news.json"));
+
+             reader= new BufferedReader(new InputStreamReader(fis));
+            StringBuilder builder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null){
+                builder.append(line);
+            }
+            ret = builder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(reader != null)
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+
+        JSONObject parent;
+        try {
+            parent = new JSONObject(ret);
+            JSONArray newsArray = parent.getJSONArray("news");
+            StringBuilder parse = new StringBuilder();
+            for (int i = 0; i < newsArray.length(); i++) {
+                JSONObject child = newsArray.getJSONObject(i);
+                parse.append(child.getString("title")).append(" ").append(child.getString("color")).append(" ").append(child.getString("desc")).append("\n");
+            }
+            news.setText(parse.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
