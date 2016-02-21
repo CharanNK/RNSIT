@@ -1,15 +1,21 @@
 package com.smartamigos.rns.StartComponents.newsfeedSection;
 
 import android.app.Fragment;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.smartamigos.rns.R;
@@ -44,7 +50,25 @@ public class newsfeed_main extends Fragment {
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         news = (TextView)view.findViewById(R.id.news);
 
-        new NewsVersion().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/n_version.json");
+        if(isNetworkConnected()){
+            new NewsVersion().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/n_version.json");
+        }else {
+            Snackbar.make(container, "No Internet Connection!", Snackbar.LENGTH_LONG).setAction("Action", null).setAction("TURN ON", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName(
+                            "com.android.settings",
+                            "com.android.settings.Settings$DataUsageSummaryActivity"));
+                    startActivity(intent);
+                }
+            }).setActionTextColor(Color.YELLOW).show();
+
+
+            loadJsonFile();
+        }
+
+
 
         SharedPreferences preferences = getActivity().getSharedPreferences("news_version", Context.MODE_PRIVATE);
         localVersion = preferences.getInt("version", 0);
@@ -78,7 +102,7 @@ public class newsfeed_main extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            //Parsing the Json file
+
             try {
                 JSONObject parent = new JSONObject(s);
                 JSONObject news_version = parent.getJSONObject("news_version");
@@ -92,14 +116,8 @@ public class newsfeed_main extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            if(!Objects.equals(localVersion, serverVersion)) {
+            if(!Objects.equals(localVersion, serverVersion))
                 new newsFetch().execute("https://googledrive.com/host/0B4MrAIPM8gwfWEJiVGVmYkxodkE/news.json");
-            }else {
-                loadJsonFile();
-            }
-
-
         }
     }
 
@@ -224,4 +242,11 @@ public class newsfeed_main extends Fragment {
         }
 
     }
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
 }
