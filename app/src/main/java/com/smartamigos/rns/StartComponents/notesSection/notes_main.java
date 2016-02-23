@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,17 +30,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class notes_main extends Fragment implements View.OnClickListener{
+public class notes_main extends Fragment implements View.OnClickListener {
     Button downloader;
     //call progress dialog class
     ProgressDialog mProgressDialog;
     //myHTTPUrl is the address of the file to be downloaded
-    String myHTTPUrl="http://sjbit.edu.in/app/course-material/ISE/VI/COMPUTER%20NETWORKS-II%20[10CS64]/ISE-VI-COMPUTER%20NETWORKS-II%20[10CS64]-NOTES.pdf";
+    String myHTTPUrl = "http://sjbit.edu.in/app/course-material/ISE/VI/COMPUTER%20NETWORKS-II%20[10CS64]/ISE-VI-COMPUTER%20NETWORKS-II%20[10CS64]-NOTES.pdf";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.notes_main,container,false);
-        downloader = (Button)view.findViewById(R.id.downloader);
+        View view = inflater.inflate(R.layout.notes_main, container, false);
+        downloader = (Button) view.findViewById(R.id.downloader);
         downloader.setOnClickListener(this);
 
         //initialise the progress dialog class
@@ -56,7 +56,7 @@ public class notes_main extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.downloader){
+        if (v.getId() == R.id.downloader) {
             new AlertDialog.Builder(getActivity())
                     .setTitle("Download Confirmation")
                     .setMessage("Are you sure you want to download this notes?")
@@ -85,11 +85,11 @@ public class notes_main extends Fragment implements View.OnClickListener{
 
     private class DownloadTask extends AsyncTask<String, Integer, String> {
 
+        String extension = ".pdf";
+        String usn = "1RN13ISxxx"; //USN can be replaced here
+        String subject = "CN-2";
         private Context context;
         private PowerManager.WakeLock mWakeLock;
-        String extension=".pdf";
-        String usn="1RN13ISxxx"; //USN can be replaced here
-        String subject="CN-2";
 
         public DownloadTask(Context context) {
             this.context = context;
@@ -117,16 +117,16 @@ public class notes_main extends Fragment implements View.OnClickListener{
                 int fileLength = connection.getContentLength();
 
                 //Download destination will be /sdcard/RNS
-                File downloadDirectory = new File(Environment.getExternalStorageDirectory(),"RNS");
+                File downloadDirectory = new File(Environment.getExternalStorageDirectory(), "RNS");
 
                 //if RNS directory does not exist create it
-                if(!downloadDirectory.exists()){
+                if (!downloadDirectory.exists()) {
                     downloadDirectory.mkdirs();
                 }
 
                 //subject can be replaced here
 
-                File file = new File(downloadDirectory,usn+subject+extension);
+                File file = new File(downloadDirectory, usn + subject + extension);
 
                 // download the file
                 input = connection.getInputStream();
@@ -163,6 +163,7 @@ public class notes_main extends Fragment implements View.OnClickListener{
             }
             return null;
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -189,7 +190,7 @@ public class notes_main extends Fragment implements View.OnClickListener{
             mWakeLock.release();
             mProgressDialog.dismiss();
             if (result != null)
-                Toast.makeText(context,"Download error: "+result, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Download error: " + result, Toast.LENGTH_LONG).show();
             else {
                 new AlertDialog.Builder(getActivity())
                         .setTitle("File Downloaded!")
@@ -206,9 +207,10 @@ public class notes_main extends Fragment implements View.OnClickListener{
                         }).show();
             }
         }
+
         private void openPdf() {
 
-            File file = new File(Environment.getExternalStorageDirectory(),"RNS"+usn+subject+extension);
+            File file = new File(Environment.getExternalStorageDirectory(), "RNS" + usn + subject + extension);
             Uri path = Uri.fromFile(file);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -36,17 +36,9 @@ public class create_json extends AsyncTask<String, Void, String> {
         try {
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            // Starts the query
-            conn.connect();
-            conn.getResponseCode();
             is = conn.getInputStream();
 
-            String contentAsString = convertStreamToString(is);
-            return contentAsString;
+            return convertStreamToString(is);
         } finally {
             if (is != null) {
                 is.close();
@@ -61,7 +53,7 @@ public class create_json extends AsyncTask<String, Void, String> {
         String line;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
