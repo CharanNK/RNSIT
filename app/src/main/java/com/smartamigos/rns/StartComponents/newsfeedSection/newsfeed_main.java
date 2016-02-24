@@ -171,6 +171,7 @@ public class newsfeed_main extends Fragment {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt("version", serverVersion);
                 editor.apply();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

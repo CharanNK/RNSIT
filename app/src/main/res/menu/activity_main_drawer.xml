@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/topNav"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_attendance"
             android:icon="@drawable/ic_event_black_24dp"
@@ -26,6 +27,9 @@
             android:id="@+id/nav_user"
             android:icon="@drawable/ic_account_box_black_24dp"
             android:title="Account"/>
+        </group>
+    <group android:id="@+id/bottomNav"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_contact"
             android:icon="@drawable/phone"
