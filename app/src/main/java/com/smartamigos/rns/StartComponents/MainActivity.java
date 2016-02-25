@@ -13,12 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.smartamigos.rns.R;
+import com.smartamigos.rns.StartComponents.ActionMenu.About_dev;
 import com.smartamigos.rns.StartComponents.AttendanceSection.attendance_main;
 import com.smartamigos.rns.StartComponents.calendarOfEvents.calendarOfEvents;
 import com.smartamigos.rns.StartComponents.contactSection.contact_main;
 import com.smartamigos.rns.StartComponents.librarySection.library_main;
 import com.smartamigos.rns.StartComponents.newsfeedSection.newsfeed_main;
-import com.smartamigos.rns.StartComponents.notesSection.notes_main;
+import com.smartamigos.rns.StartComponents.notesSection.*;
 import com.smartamigos.rns.StartComponents.userDetails.user_main;
 
 public class MainActivity extends AppCompatActivity
@@ -67,7 +68,13 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Fragment fragment;
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            fragment = new About_dev();
+            ft.replace(R.id.content_main,fragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
+            ft.commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -107,7 +114,7 @@ public class MainActivity extends AppCompatActivity
             ft.addToBackStack(null);
             ft.commit();
         } else if (id == R.id.nav_notes) {
-            fragment = new notes_main();
+            fragment = new notes_2();
             ft.replace(R.id.content_main,fragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(null);
