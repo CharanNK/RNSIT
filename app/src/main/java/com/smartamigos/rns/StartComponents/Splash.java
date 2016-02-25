@@ -27,7 +27,7 @@ public class Splash extends Activity {
 
 //set content view AFTER ABOVE sequence (to avoid crash)
             this.setContentView(R.layout.splash);
-        }
+        };
         setContentView(R.layout.splash);
 
         final ImageView iv = (ImageView) findViewById(R.id.imageView2);
