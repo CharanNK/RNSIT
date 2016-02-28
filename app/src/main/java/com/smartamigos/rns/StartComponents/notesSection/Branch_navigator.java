@@ -17,11 +17,15 @@ import com.smartamigos.rns.R;
 import com.smartamigos.rns.StartComponents.AttendanceSection.attendance_main;
 import com.smartamigos.rns.StartComponents.calendarOfEvents.calendarOfEvents;
 
+import java.util.ArrayList;
+
 /**
  * Created by CHARAN on 2/27/2016.
  */
 public class Branch_navigator extends Fragment implements View.OnClickListener {
     Button branch_civil;
+    final private String[] civil4={"http://sjbit.edu.in/app/course-material/CIVIL/IV/SURVEYING-II%20[10CV44]/CIVIL-IV-SURVEYING-II%20[10CV44]-NOTES.pdf",
+    "http://sjbit.edu.in/app/course-material/CIVIL/IV/ENGINEERING%20MATHEMATICS%20-%20IV%20[10MAT41]/CIVIL-IV-ENGINEERING%20MATHEMATICS%20-%20IV%20[10MAT41]-NOTES.pdf"};
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,13 +63,6 @@ public class Branch_navigator extends Fragment implements View.OnClickListener {
         }
 
         if(v.getId() == R.id.sem_submit_button) {
-            Fragment fragment;
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            fragment = new notes_2();
-            ft.replace(R.id.content_main,fragment);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.addToBackStack(null);
-            ft.commit();
         }
     }
 
@@ -78,7 +75,7 @@ public class Branch_navigator extends Fragment implements View.OnClickListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             switch (position){
-                case 2:
+                case 3:
                     LayoutInflater li = LayoutInflater.from(getActivity());
 
                     View promptsView = li.inflate(R.layout.subject_navigator, null);
@@ -94,7 +91,7 @@ public class Branch_navigator extends Fragment implements View.OnClickListener {
                     final Spinner mSpinner= (Spinner) promptsView
                             .findViewById(R.id.sem_spinner);
                     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                            R.array.civil3,R.layout.spinner_item);
+                            R.array.civil4,R.layout.spinner_item);
 
                     adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     mSpinner.setAdapter(adapter);
@@ -128,7 +125,7 @@ public class Branch_navigator extends Fragment implements View.OnClickListener {
                     case 1:
                         Fragment fragment;
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        fragment = new notes_2();
+                        fragment = new notes_2(civil4[0]);
                         ft.replace(R.id.content_main, fragment);
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                         ft.addToBackStack(null);

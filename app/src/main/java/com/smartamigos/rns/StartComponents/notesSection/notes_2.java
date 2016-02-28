@@ -47,6 +47,11 @@ public class notes_2 extends Fragment implements View.OnClickListener {
     //myHTTPUrl is the address of the file to be downloaded
     String myHTTPUrl = "http://sjbit.edu.in/app/course-material/ISE/VI/COMPUTER%20NETWORKS-II%20[10CS64]/ISE-VI-COMPUTER%20NETWORKS-II%20[10CS64]-NOTES.pdf";
 
+    public notes_2(String url) {
+        myHTTPUrl=url;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

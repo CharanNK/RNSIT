@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
     <string-array name="semarray">
+        <item></item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -17,12 +18,23 @@
     </string-array>
 
     <string-array name="civil3">
+        <item></item>
         <item>Maths-3</item>
         <item>Building Materials and CT</item>
         <item>Strength Of Materials</item>
         <item>Surveying-1</item>
         <item>Fluid Mechanics</item>
         <item>Applied Geology</item>
+    </string-array>
+
+    <string-array name="civil4">
+        <item></item>
+        <item>Maths-4</item>
+        <item>Concrete Technology</item>
+        <item>Structural Analysis-1</item>
+        <item>Surveying-2</item>
+        <item>Hydraulics and Hydraulic Machines</item>
+        <item>Building Planning and Drawing</item>
     </string-array>
 
 </resources>
