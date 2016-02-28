@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
             ft.addToBackStack(null);
             ft.commit();
         } else if (id == R.id.nav_notes) {
-            fragment = new notes_2();
+            fragment = new Branch_navigator();
             ft.replace(R.id.content_main,fragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(null);

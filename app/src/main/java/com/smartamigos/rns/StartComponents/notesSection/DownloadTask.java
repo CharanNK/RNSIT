@@ -93,7 +93,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
             File file = new File(downloadDirectory, usn+subject+extension);
 
             if(file.exists()){
-                openPdf();
+
             }
             else{
                 // download the file
@@ -184,14 +184,13 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
     private void openPdf() {
 
 
+
         File file = new File("/sdcard/RNS/"+usn+subject+extension);
-//            File file = new File(Environment.getExternalStorageDirectory(), "RNS" + usn + subject + extension);
 
         Uri path = Uri.fromFile(file);
         Intent intent = new Intent();
         intent.setPackage("com.adobe.reader");
         intent.setDataAndType(path, "application/pdf");
-//        intent.setAction(notes_2.class.getName());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             mContext.startActivity(intent);
@@ -199,6 +198,5 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
             Toast.makeText(mContext.getApplicationContext(), "No application found",
                     Toast.LENGTH_SHORT).show();
         }
-
     }
 }
