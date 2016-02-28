@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartamigos.rns.R;
@@ -40,15 +41,19 @@ import java.net.URL;
 public class notes_2 extends Fragment implements View.OnClickListener {
     String extension = ".pdf";
     String usn = "1RN13ISxxx"; //USN can be replaced here
-    String subject = "CN-2";
+    String subject ;
     Button downloader;
     //call progress dialog class
     ProgressDialog mProgressDialog;
     //myHTTPUrl is the address of the file to be downloaded
-    String myHTTPUrl = "http://sjbit.edu.in/app/course-material/ISE/VI/COMPUTER%20NETWORKS-II%20[10CS64]/ISE-VI-COMPUTER%20NETWORKS-II%20[10CS64]-NOTES.pdf";
+    String myHTTPUrl;
+    String branch,sem;
 
-    public notes_2(String url) {
+    public notes_2(String branch, String sem, String sub, String url) {
+        subject=sub;
         myHTTPUrl=url;
+        this.branch=branch;
+        this.sem=sem;
     }
 
 
@@ -58,6 +63,14 @@ public class notes_2 extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.notes_main, container, false);
         downloader = (Button) view.findViewById(R.id.downloader);
         downloader.setOnClickListener(this);
+
+        TextView branch_indicator=(TextView)view.findViewById(R.id.branch_indicator);
+        TextView sem_indicator=(TextView)view.findViewById(R.id.sem_indicator);
+        TextView sub_indicator=(TextView)view.findViewById(R.id.sub_indicator);
+
+        branch_indicator.setText(branch);
+        sem_indicator.setText(sem);
+        sub_indicator.setText(subject);
 
         //initialise the progress dialog class
         mProgressDialog = new ProgressDialog(getActivity());
