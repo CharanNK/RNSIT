@@ -3,15 +3,21 @@ package com.smartamigos.rns.StartComponents.notesSection;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.smartamigos.rns.R;
 
@@ -19,6 +25,7 @@ import com.smartamigos.rns.R;
  * Created by CHARAN on 2/27/2016.
  */
 public class Branch_navigator extends Fragment implements View.OnClickListener {
+    private RelativeLayout rootView;
     Button branch_civil;
     final private String[] civil4={"M-4","CT","SA-1","SURVEY-2","HHM","BPD","http://sjbit.edu.in/app/course-material/CIVIL/IV/SURVEYING-II%20[10CV44]/CIVIL-IV-SURVEYING-II%20[10CV44]-NOTES.pdf",
     "http://sjbit.edu.in/app/course-material/CIVIL/IV/ENGINEERING%20MATHEMATICS%20-%20IV%20[10MAT41]/CIVIL-IV-ENGINEERING%20MATHEMATICS%20-%20IV%20[10MAT41]-NOTES.pdf"};
@@ -29,6 +36,32 @@ public class Branch_navigator extends Fragment implements View.OnClickListener {
         branch_civil=(Button)view.findViewById(R.id.branch_civil);
         branch_civil.setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        if(!isNetworkConnected()){
+            Snackbar snackbar = Snackbar.make(getView(),"No Internet Connection!",Snackbar.LENGTH_LONG).setAction("TURN ON", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        }
+        super.onResume();
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
     @Override

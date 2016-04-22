@@ -8,7 +8,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +21,7 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +36,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -39,6 +47,7 @@ import java.net.URL;
  */
 
 public class notes_2 extends Fragment implements View.OnClickListener {
+    private WifiManager wifiManager;
     String extension = ".pdf";
     String usn = "1RN13ISxxx"; //USN can be replaced here
     String subject ;
@@ -85,6 +94,7 @@ public class notes_2 extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.downloader) {
+            if(isNetworkConnected())
             new AlertDialog.Builder(getActivity())
                     .setTitle("Download Confirmation")
                     .setMessage("Are you sure you want to download this notes?")
@@ -100,7 +110,28 @@ public class notes_2 extends Fragment implements View.OnClickListener {
 
                         }
                     }).show();
+            else {
+                Snackbar snackbar = Snackbar.make(getView(),"No Internet Connection!",Snackbar.LENGTH_LONG).setAction("TURN ON", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        wifiManager = (WifiManager)getActivity().getSystemService(Context.WIFI_SERVICE);
+                        wifiManager.setWifiEnabled(true);
+                    }
+                });
+                // Changing message text color
+                snackbar.setActionTextColor(Color.RED);
+
+                // Changing action button text color
+                View sbView = snackbar.getView();
+                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(Color.YELLOW);
+                snackbar.show();
+            }
         }
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
 }

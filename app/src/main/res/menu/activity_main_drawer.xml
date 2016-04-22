@@ -24,6 +24,10 @@
             android:icon="@drawable/ic_assignment_black_24dp"
             android:title="Notes"/>
         <item
+            android:id="@+id/nav_bus"
+            android:icon="@drawable/ic_directions_bus_black_24dp"
+            android:title="Track Bus"/>
+        <item
             android:id="@+id/nav_user"
             android:icon="@drawable/ic_account_box_black_24dp"
             android:title="Account"/>
